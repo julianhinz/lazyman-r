@@ -32,11 +32,21 @@ echo "######################################################"
 
 sudo adduser rstudiouser
 
+su - rstudiouser
+
+# install dropbox for rstudio
+cd ~ 
+wget -O - "https://www.dropbox.com/download?plat=lnx.x86_64" | tar xzf -
+wget -O ~/dropbox.py "http://www.dropbox.com/download?dl=packages/dropbox.py"
+chmod 755 ~/dropbox.py
 
 # get your AWS instance public hostname
 pubdns=$(curl -s http://169.254.169.254/latest/meta-data/public-hostname)
 
 echo "######################################################"
+echo ""
+echo "To link with our dropbox run:"
+echo "~/.dropbox-dist/dropboxd"
 echo ""
 echo "Your RStudio Server login is accessible from:"
 echo "http://$pubdns:8787"
