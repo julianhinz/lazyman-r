@@ -32,13 +32,11 @@ echo "######################################################"
 
 sudo adduser rstudiouser
 
-su - rstudiouser
-
 # install dropbox for rstudio
-cd ~ 
-wget -O - "https://www.dropbox.com/download?plat=lnx.x86_64" | tar xzf -
-wget -O ~/dropbox.py "http://www.dropbox.com/download?dl=packages/dropbox.py"
-chmod 755 ~/dropbox.py
+sudo -u rstudiouser cd ~ 
+sudo -u rstudiouser wget -O - "https://www.dropbox.com/download?plat=lnx.x86_64" | tar xzf -
+sudo -u rstudiouser wget -O ~/dropbox.py "http://www.dropbox.com/download?dl=packages/dropbox.py"
+sudo -u rstudiouser chmod 755 ~/dropbox.py
 
 # get your AWS instance public hostname
 pubdns=$(curl -s http://169.254.169.254/latest/meta-data/public-hostname)
