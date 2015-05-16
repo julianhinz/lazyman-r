@@ -24,7 +24,7 @@ cd RevoMath
 sudo wget http://mran.revolutionanalytics.com/install/RevoMath-8.0.3.tar.gz -O revomath.tar.gz
 sudo tar -xzf revomath.tar.gz
 cd RevoMath
-./RevoMath.sh
+sudo ./RevoMath.sh
 
 # install RStudio
 cd ~
