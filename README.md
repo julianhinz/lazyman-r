@@ -1,7 +1,7 @@
-lazyman-openr-rstudio
+Lazyman R
 =====================
 
-A lazy man's install of Revolution R Open and Rstudio Server on AWS
+A lazy man's install of Revolution R Open or Vanilla R and Rstudio Server on AWS or Digital Ocean.
 
 =====================
 
