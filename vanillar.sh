@@ -8,15 +8,16 @@ gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys E084DAB9
 gpg -a --export E084DAB9 | sudo apt-key add -
 
 # install R
-sudo apt-get install r-base
+sudo apt-get install r-base -y
 
 # install RStudio
 cd ~
-sudo apt-get install gdebi-core
+sudo apt-get install gdebi-core -y
 
 # Go get the latest from http://www.rstudio.com/products/rstudio/download-server/ if you don't like my hard-coding
 wget http://download2.rstudio.org/rstudio-server-0.99.441-amd64.deb -O rstudio.deb
 sudo gdebi --non-interactive rstudio.deb
+rm rstudio.deb
 
 echo "######################################################"
 echo ""
@@ -35,18 +36,14 @@ sudo -u rstudiouser wget -O ./dropbox.py "http://www.dropbox.com/download?dl=pac
 sudo -u rstudiouser chmod 755 ./dropbox.py
 
 # get your AWS instance public hostname
-pubdns=$(curl -s http://169.254.169.254/latest/meta-data/public-hostname)
+pubdns=$(curl http://canhazip.com)
 
 echo "######################################################"
 echo ""
-echo "To link with our dropbox run:"
+echo "To link with our dropbox change to rstudiouser and run:"
 echo "~/.dropbox-dist/dropboxd"
 echo ""
 echo "Your RStudio Server login is accessible from:"
 echo "http://$pubdns:8787"
-echo ""
-echo "This URL based on your Public DNS name and can change if you shutdown and bootup again"
-echo ""
-echo "Loging in with rstudiouser and the password you just created"
 echo ""
 echo "######################################################"

@@ -1,8 +1,21 @@
 Lazyman R
 =====================
 
-A lazy man's install of Revolution R Open or Vanilla R and Rstudio Server on AWS or Digital Ocean.
+A lazy man's install of Revolution R Open or Vanilla R and Rstudio Server on AWS or Digital Ocean, originally by <a href="http://benporter.io/blog/r/lazy-mans-install-of-rstudio-server-on-ec2">benporter</a>. Just type into your terminal
 
-=====================
+```
+sudo apt-get install git -y
+git clone https://github.com/julianhinz/lazyman-r.git
+```
 
-Read about this at:  <a href="http://benporter.io/blog/r/lazy-mans-install-of-rstudio-server-on-ec2">http://benporter.io/blog/r/lazy-mans-install-of-rstudio-server-on-ec2</a>
+and then for vanilla R:
+
+```
+sudo lazyman-r/vanillar.sh
+```
+
+or for Revolution R Open:
+
+```
+sudo lazyman-r/rro.sh
+```
