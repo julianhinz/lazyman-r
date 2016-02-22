@@ -15,8 +15,8 @@ sudo mkswap /swapfile
 sudo swapon /swapfile
 
 # stuff
-sudo apt-get install libcurl4-openssl-dev
-sudo apt-get install libxml2-dev
+sudo apt-get install libcurl4-openssl-dev -y
+sudo apt-get install libxml2-dev -y
 
 # install R
 sudo apt-get install r-base -y
