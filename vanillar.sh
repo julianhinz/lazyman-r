@@ -3,9 +3,20 @@
 sudo apt-get update
 
 # add CRAN mirror
-echo "deb http://cran.rstudio.com/bin/linux/ubuntu trusty/" | sudo tee -a /etc/apt/sources.list
+echo "deb http://cran.r-project.org/bin/linux/ubuntu trusty/" | sudo tee -a /etc/apt/sources.list
 gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys E084DAB9
 gpg -a --export E084DAB9 | sudo apt-key add -
+
+# set up swap
+sudo dd if=/dev/zero of=/swapfile bs=256M count=20
+sudo chmod 600 /swapfile
+ls -lh /swapfile
+sudo mkswap /swapfile
+sudo swapon /swapfile
+
+# stuff
+sudo apt-get install libcurl4-openssl-dev
+sudo apt-get install libxml2-dev
 
 # install R
 sudo apt-get install r-base -y
@@ -14,10 +25,15 @@ sudo apt-get install r-base -y
 cd ~
 sudo apt-get install gdebi-core -y
 
-# Go get the latest from http://www.rstudio.com/products/rstudio/download-server/ if you don't like my hard-coding
-wget http://download2.rstudio.org/rstudio-server-0.99.441-amd64.deb -O rstudio.deb
-sudo gdebi --non-interactive rstudio.deb
-rm rstudio.deb
+# get latest rstudio version and install
+VER=$(wget --no-check-certificate -qO- https://s3.amazonaws.com/rstudio-server/current.ver)
+sudo wget -q http://download2.rstudio.org/rstudio-server-${VER}-amd64.deb
+sudo dpkg -i rstudio-server-${VER}-amd64.deb
+rm rstudio-server-*-amd64.deb
+
+#wget http://download2.rstudio.org/rstudio-server-0.99.441-amd64.deb -O rstudio.deb
+#sudo gdebi --non-interactive rstudio.deb
+#rm rstudio.deb
 
 echo "######################################################"
 echo ""
@@ -32,6 +48,7 @@ sudo adduser rstudiouser
 cd /home/rstudiouser
 sudo wget -O ./- "https://www.dropbox.com/download?plat=lnx.x86_64"
 sudo -u rstudiouser tar xzf ./-
+sudo -u rstudiouser rm ./-
 sudo -u rstudiouser wget -O ./dropbox.py "http://www.dropbox.com/download?dl=packages/dropbox.py"
 sudo -u rstudiouser chmod 755 ./dropbox.py
 
