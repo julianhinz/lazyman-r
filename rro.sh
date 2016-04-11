@@ -1,15 +1,22 @@
 #!/usr/bin/env bash
 
+# set up swap
+sudo dd if=/dev/zero of=/swapfile bs=256M count=20
+sudo chmod 600 /swapfile
+ls -lh /swapfile
+sudo mkswap /swapfile
+sudo swapon /swapfile
+
 ### Install Revolution R Open #####
 sudo apt-get update
-sudo apt-get install gcc gfortran g++ -y
+sudo apt-get install gcc gfortran g++ gdebi-core libapparmor1 -y
 
 cd ~
 mkdir R
 cd R
-sudo wget http://mran.revolutionanalytics.com/install/RRO-8.0.3-Ubuntu-14.04.x86_64.tar.gz -O rro.tar.gz
+sudo wget https://mran.revolutionanalytics.com/install/RRO-3.2.1-Ubuntu-14.04.x86_64.tar.gz -O rro.tar.gz
 sudo tar -xzf rro.tar.gz
-cd RRO-8.0.3
+cd RRO-3.2.1
 sudo ./install.sh
 
 # add CRAN mirror
@@ -21,18 +28,19 @@ gpg -a --export E084DAB9 | sudo apt-key add -
 cd ~
 mkdir RevoMath
 cd RevoMath
-sudo wget http://mran.revolutionanalytics.com/install/RevoMath-8.0.3.tar.gz -O revomath.tar.gz
+sudo wget https://mran.microsoft.com/install/mro/3.2.1/RevoMath-3.2.1.tar.gz -O revomath.tar.gz
 sudo tar -xzf revomath.tar.gz
 cd RevoMath
 sudo ./RevoMath.sh
 
 # install RStudio
+# get latest rstudio version and install
 cd ~
-sudo apt-get install gdebi libapparmor1 -y
+VER=$(wget --no-check-certificate -qO- https://s3.amazonaws.com/rstudio-server/current.ver)
+sudo wget -q http://download2.rstudio.org/rstudio-server-${VER}-amd64.deb
+sudo dpkg -i rstudio-server-${VER}-amd64.deb
+rm rstudio-server-*-amd64.deb
 
-# Go get the latest from http://www.rstudio.com/products/rstudio/download-server/ if you don't like my hard-coding
-wget http://download2.rstudio.org/rstudio-server-0.98.1103-amd64.deb -O rstudio.deb
-sudo gdebi --non-interactive rstudio.deb
 
 echo "######################################################"
 echo ""
@@ -47,6 +55,7 @@ sudo adduser rstudiouser
 cd /home/rstudiouser
 sudo wget -O ./- "https://www.dropbox.com/download?plat=lnx.x86_64"
 sudo -u rstudiouser tar xzf ./-
+sudo -u rstudiouser rm ./-
 sudo -u rstudiouser wget -O ./dropbox.py "http://www.dropbox.com/download?dl=packages/dropbox.py"
 sudo -u rstudiouser chmod 755 ./dropbox.py
 
